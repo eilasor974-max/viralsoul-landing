@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Pet Loss Healing Journal — ViralSoul Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --warm-white: #FDF9F5;
+    --blush: #F5E6DF;
+    --rose: #B85C4A;
+    --rose-deep: #8C3D2D;
+    --rose-light: #E8A090;
+    --petal: #F0D0C5;
+    --ink: #2A1F1A;
+    --muted: #7A6860;
+    --sage: #6B8C6E;
+    --gold: #C4922A;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--warm-white);
+    font-family: 'Jost', sans-serif;
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  /* ─── FLOATING PETALS BG ─── */
+  .bg-petals {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .petal {
+    position: absolute;
+    width: 6px;
+    height: 10px;
+    background: var(--petal);
+    border-radius: 50% 50% 50% 0;
+    opacity: 0.35;
+    animation: floatPetal linear infinite;
+  }
+
+  @keyframes floatPetal {
+    0% { transform: translateY(-20px) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.35; }
+    90% { opacity: 0.2; }
+    100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+  }
+
+  /* ─── HERO SECTION ─── */
+  .hero {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 60px 24px 40px;
+    background: linear-gradient(180deg, #FDF9F5 0%, #F5E6DF 50%, #EDD5CB 100%);
+  }
+
+  .brand-tag {
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--rose);
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: riseUp 0.7s ease 0.1s forwards;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(1rem, 3vw, 1.3rem);
+    color: var(--rose-light);
+    margin-bottom: 12px;
+    opacity: 0;
+    animation: riseUp 0.7s ease 0.2s forwards;
+  }
+
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: clamp(2.6rem, 8vw, 5rem);
+    line-height: 1.1;
+    max-width: 720px;
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: riseUp 0.8s ease 0.3s forwards;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--rose);
+  }
+
+  .hero-sub {
+    font-size: clamp(1rem, 2.5vw, 1.15rem);
+    color: var(--muted);
+    font-weight: 300;
+    max-width: 520px;
+    line-height: 1.8;
+    margin-bottom: 48px;
+    opacity: 0;
+    animation: riseUp 0.8s ease 0.4s forwards;
+  }
+
+  /* ─── JOURNAL MOCKUP ─── */
+  .journal-mockup {
+    position: relative;
+    width: min(320px, 85vw);
+    margin: 0 auto 40px;
+    opacity: 0;
+    animation: riseUp 0.9s ease 0.5s forwards;
+  }
+
+  .journal-card {
+    background: linear-gradient(145deg, #FDF9F5, #F0D0C5);
+    border: 1px solid rgba(184,92,74,0.2);
+    border-radius: 16px;
+    padding: 32px 28px;
+    box-shadow: 0 20px 60px rgba(138,61,45,0.15), 0 4px 16px rgba(138,61,45,0.08);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .journal-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--rose-light), var(--rose), var(--rose-light));
+  }
+
+  .journal-paw {
+    font-size: 2rem;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .journal-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--rose-deep);
+    margin-bottom: 4px;
+  }
+
+  .journal-subtitle {
+    font-size: 0.8rem;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .journal-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    text-align: left;
+  }
+
+  .journal-features li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.88rem;
+    color: var(--ink);
+  }
+
+  .journal-features li::before {
+    content: '🌸';
+    font-size: 0.75rem;
+  }
+
+  .badge-free {
+    position: absolute;
+    top: 16px; right: 16px;
+    background: var(--sage);
+    color: #fff;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-weight: 500;
+  }
+
+  /* ─── FORM SECTION ─── */
+  .form-section {
+    position: relative;
+    z-index: 1;
+    padding: 0 24px 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .form-wrapper {
+    background: #fff;
+    border-radius: 20px;
+    padding: 40px 36px;
+    max-width: 480px;
+    width: 100%;
+    box-shadow: 0 8px 40px rgba(138,61,45,0.10);
+    border: 1px solid rgba(184,92,74,0.12);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .form-wrapper::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--rose-light), var(--rose));
+  }
+
+  .form-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 6px;
+    color: var(--ink);
+  }
+
+  .form-sublabel {
+    text-align: center;
+    font-size: 0.88rem;
+    color: var(--muted);
+    margin-bottom: 28px;
+    line-height: 1.6;
+  }
+
+  .form-group {
+    margin-bottom: 16px;
+  }
+
+  .form-group label {
+    display: block;
+    font-size: 0.8rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  .form-group input {
+    width: 100%;
+    padding: 14px 18px;
+    border: 1.5px solid rgba(184,92,74,0.2);
+    border-radius: 10px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.95rem;
+    color: var(--ink);
+    background: var(--warm-white);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    outline: none;
+  }
+
+  .form-group input:focus {
+    border-color: var(--rose);
+    box-shadow: 0 0 0 3px rgba(184,92,74,0.1);
+  }
+
+  .form-group input::placeholder {
+    color: var(--rose-light);
+    opacity: 0.7;
+  }
+
+  .btn-download {
+    width: 100%;
+    padding: 18px;
+    background: linear-gradient(135deg, var(--rose) 0%, var(--rose-deep) 100%);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-family: 'Jost', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-download::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(rgba(255,255,255,0.1), rgba(255,255,255,0));
+  }
+
+  .btn-download:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(138,61,45,0.3);
+  }
+
+  .btn-download:active {
+    transform: translateY(0);
+  }
+
+  .form-trust {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 16px;
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+
+  .form-trust span { color: var(--sage); }
+
+  /* SUCCESS STATE */
+  .success-state {
+    display: none;
+    text-align: center;
+    padding: 20px 0;
+  }
+
+  .success-icon {
+    font-size: 3rem;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .success-state h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    color: var(--rose-deep);
+    margin-bottom: 10px;
+  }
+
+  .success-state p {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 20px;
+  }
+
+  .btn-shop {
+    display: inline-block;
+    padding: 14px 32px;
+    background: var(--sage);
+    color: #fff;
+    border-radius: 30px;
+    text-decoration: none;
+    font-size: 0.88rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: transform 0.2s ease;
+  }
+
+  .btn-shop:hover { transform: translateY(-2px); }
+
+  /* ─── WHAT'S INSIDE SECTION ─── */
+  .inside-section {
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(180deg, var(--blush) 0%, var(--warm-white) 100%);
+    padding: 80px 24px;
+  }
+
+  .section-eyebrow {
+    text-align: center;
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--rose);
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    text-align: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 5vw, 2.8rem);
+    font-weight: 600;
+    margin-bottom: 48px;
+    color: var(--ink);
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .feature-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 28px 24px;
+    border: 1px solid rgba(184,92,74,0.1);
+    transition: transform 0.2s ease;
+    text-align: center;
+  }
+
+  .feature-card:hover { transform: translateY(-4px); }
+
+  .feature-icon {
+    font-size: 2rem;
+    margin-bottom: 14px;
+    display: block;
+  }
+
+  .feature-card h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--rose-deep);
+  }
+
+  .feature-card p {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  /* ─── TESTIMONIALS ─── */
+  .testimonial-section {
+    position: relative;
+    z-index: 1;
+    padding: 80px 24px;
+    background: var(--warm-white);
+  }
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .testimonial-card {
+    background: var(--blush);
+    border-radius: 16px;
+    padding: 28px 24px;
+    border-left: 4px solid var(--rose-light);
+    position: relative;
+  }
+
+  .testimonial-card::before {
+    content: '\201C';
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 5rem;
+    color: var(--rose-light);
+    opacity: 0.3;
+    position: absolute;
+    top: 8px; left: 16px;
+    line-height: 1;
+  }
+
+  .testimonial-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--ink);
+    line-height: 1.7;
+    margin-bottom: 16px;
+    padding-top: 24px;
+  }
+
+  .testimonial-author {
+    font-size: 0.8rem;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .stars {
+    color: var(--gold);
+    margin-bottom: 8px;
+    font-size: 0.85rem;
+  }
+
+  /* ─── FULL PRODUCT CTA ─── */
+  .upgrade-section {
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(135deg, #3D1F16 0%, #5C2E20 50%, #3D1F16 100%);
+    padding: 80px 24px;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .upgrade-section::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: rgba(184,92,74,0.1);
+    pointer-events: none;
+  }
+
+  .upgrade-eyebrow {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--rose-light);
+    margin-bottom: 16px;
+  }
+
+  .upgrade-section h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    color: #fff;
+    max-width: 600px;
+    margin: 0 auto 20px;
+    line-height: 1.2;
+  }
+
+  .upgrade-section h2 em {
+    font-style: italic;
+    color: var(--rose-light);
+  }
+
+  .upgrade-section p {
+    color: rgba(255,255,255,0.65);
+    font-size: 1rem;
+    max-width: 480px;
+    margin: 0 auto 36px;
+    line-height: 1.7;
+  }
+
+  .price-display {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 8px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 14px 28px;
+    border-radius: 60px;
+    margin-bottom: 24px;
+  }
+
+  .price-old {
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.4);
+    text-decoration: line-through;
+  }
+
+  .price-new {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem;
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .price-note {
+    font-size: 0.8rem;
+    color: var(--rose-light);
+    display: block;
+    margin-top: -18px;
+    margin-bottom: 28px;
+    letter-spacing: 1px;
+  }
+
+  .btn-upgrade {
+    display: inline-block;
+    padding: 18px 44px;
+    background: var(--rose);
+    color: #fff;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 500;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    position: relative;
+    z-index: 1;
+  }
+
+  .btn-upgrade:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(184,92,74,0.4);
+  }
+
+  /* ─── FOOTER ─── */
+  .footer {
+    position: relative;
+    z-index: 1;
+    background: var(--ink);
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+    padding: 32px 24px;
+    font-size: 0.8rem;
+    line-height: 1.8;
+  }
+
+  .footer a {
+    color: var(--rose-light);
+    text-decoration: none;
+  }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes riseUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ─── INSTRUCTION OVERLAY ─── */
+  .carrd-guide {
+    position: fixed;
+    bottom: 24px; right: 24px;
+    background: var(--ink);
+    color: #fff;
+    border-radius: 16px;
+    padding: 20px 24px;
+    max-width: 280px;
+    z-index: 100;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    font-size: 0.82rem;
+    line-height: 1.6;
+  }
+
+  .carrd-guide h5 {
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--rose-light);
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .carrd-guide ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    color: rgba(255,255,255,0.7);
+  }
+
+  .carrd-guide ul li::before {
+    content: '→ ';
+    color: var(--rose-light);
+  }
+
+  .close-guide {
+    position: absolute;
+    top: 12px; right: 14px;
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.4);
+    cursor: pointer;
+    font-size: 1.1rem;
+    line-height: 1;
+  }
+
+  @media (max-width: 600px) {
+    .form-wrapper { padding: 28px 20px; }
+    .carrd-guide { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- FLOATING PETALS -->
+<div class="bg-petals" id="petals"></div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="brand-tag">ViralSoul Studio · Free Gift For You</div>
+  <div class="hero-eyebrow">For the love that never leaves 🐾</div>
+  <h1>Heal Your Heart.<br><em>Honor Their Love.</em></h1>
+  <p class="hero-sub">Download your free 5-page Pet Loss Healing Journal — guided prompts to help you grieve, remember, and slowly find peace again.</p>
+
+  <!-- JOURNAL MOCKUP -->
+  <div class="journal-mockup">
+    <div class="journal-card">
+      <span class="badge-free">Free Download</span>
+      <span class="journal-paw">🐾</span>
+      <div class="journal-title">Pet Loss Healing Journal</div>
+      <div class="journal-subtitle">Starter Pages · Free Sample</div>
+      <ul class="journal-features">
+        <li>5 guided grief prompts</li>
+        <li>Memory & tribute page</li>
+        <li>Daily healing affirmations</li>
+        <li>"Letter to my fur angel" template</li>
+        <li>Works on phone, tablet & laptop</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- EMAIL FORM -->
+<section class="form-section">
+  <div class="form-wrapper" id="formWrapper">
+
+    <div id="formContent">
+      <div class="form-label">Get Instant Access</div>
+      <div class="form-sublabel">Enter your name and email — we'll send your free journal pages immediately. No spam, ever.</div>
+
+      <div class="form-group">
+        <label>Your First Name</label>
+        <input type="text" id="nameInput" placeholder="e.g. Maria" />
+      </div>
+
+      <div class="form-group">
+        <label>Your Email Address</label>
+        <input type="email" id="emailInput" placeholder="maria@email.com" />
+      </div>
+
+      <button class="btn-download" onclick="handleSubmit()">
+        🌸 &nbsp; Send Me the Free Journal Pages
+      </button>
+
+      <div class="form-trust">
+        <span>🔒</span> 100% free · Instant download · No spam
+      </div>
+    </div>
+
+    <div class="success-state" id="successState">
+      <span class="success-icon">💌</span>
+      <h3>Check Your Inbox!</h3>
+      <p>Your free healing journal pages are on their way. While you wait — here's the full Pet Loss Healing Kit if you're ready to go deeper.</p>
+      <a href="https://viralsoulstudio.gumroad.com" class="btn-shop" target="_blank">
+        View Full Healing Kit →
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- WHAT'S INSIDE -->
+<section class="inside-section">
+  <div class="section-eyebrow">What you'll receive</div>
+  <div class="section-title reveal">Everything You Need to Begin Healing</div>
+
+  <div class="features-grid">
+    <div class="feature-card reveal">
+      <span class="feature-icon">📝</span>
+      <h4>Guided Grief Prompts</h4>
+      <p>5 carefully written prompts that gently walk you through the pain — no pressure, no timeline.</p>
+    </div>
+    <div class="feature-card reveal">
+      <span class="feature-icon">🌸</span>
+      <h4>Memory Tribute Page</h4>
+      <p>A beautiful space to record their name, photo, and the story of the love you shared.</p>
+    </div>
+    <div class="feature-card reveal">
+      <span class="feature-icon">💌</span>
+      <h4>Letter Template</h4>
+      <p>Say the things you never got to say. A guided "Letter to My Fur Angel" template to help you find closure.</p>
+    </div>
+    <div class="feature-card reveal">
+      <span class="feature-icon">🕊️</span>
+      <h4>Daily Affirmations</h4>
+      <p>Gentle morning affirmations for grieving pet parents — because your grief is valid and real.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonial-section">
+  <div class="section-eyebrow reveal">What grieving pet parents say</div>
+  <div class="section-title reveal">You Are Not Alone in This</div>
+
+  <div class="testimonials-grid">
+    <div class="testimonial-card reveal">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">I bought this for a friend who lost her golden retriever. She texted me crying saying it was exactly what she needed.</p>
+      <div class="testimonial-author">— Michelle R., verified buyer</div>
+    </div>
+    <div class="testimonial-card reveal">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">I didn't know how to grieve my cat. This journal gave me permission to feel everything without shame. Healing takes time, and this helped.</p>
+      <div class="testimonial-author">— Jasmine T., cat mom</div>
+    </div>
+    <div class="testimonial-card reveal">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">Not a PDF. An experience. I opened it on my phone the night we lost Buddy and I cried for an hour — in the best way.</p>
+      <div class="testimonial-author">— Sandra M., dog mom</div>
+    </div>
+  </div>
+</section>
+
+<!-- UPGRADE CTA -->
+<section class="upgrade-section">
+  <div class="upgrade-eyebrow reveal">Ready to go deeper?</div>
+  <h2 class="reveal">The Full <em>Pet Loss Healing Kit</em> Is Waiting For You</h2>
+  <p class="reveal">Everything in the free sample — plus 50+ healing prompts, memory journal, daily healing tracker, affirmation cards, and AI grief companion prompts. Works on any device. Instant download.</p>
+
+  <div class="price-display reveal">
+    <span class="price-old">$19.99</span>
+    <span class="price-new">$9.99</span>
+  </div>
+  <span class="price-note reveal">One-time payment · Instant access · No subscriptions</span>
+
+  <a href="https://viralsoulstudio.gumroad.com" class="btn-upgrade reveal" target="_blank">
+    Get the Full Healing Kit →
+  </a>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <p>© 2025 ViralSoul Studio · <a href="https://viralsoulstudio.gumroad.com" target="_blank">Shop All Products</a></p>
+  <p style="margin-top:6px">Healing journals · Poetry collections · Digital tools for creators & introverts</p>
+  <p style="margin-top:12px;font-size:0.75rem">By entering your email, you agree to receive healing resources and occasional product updates from ViralSoul Studio. Unsubscribe anytime.</p>
+</footer>
+
+<!-- CARRD SETUP GUIDE -->
+<div class="carrd-guide" id="carrdGuide">
+  <button class="close-guide" onclick="document.getElementById('carrdGuide').style.display='none'">✕</button>
+  <h5>Carrd Setup Guide</h5>
+  <ul>
+    <li>Copy this design to Carrd</li>
+    <li>Replace form with Carrd's Form block</li>
+    <li>Connect MailerLite for email capture</li>
+    <li>Update Gumroad links with your URL</li>
+    <li>Add your product mockup image</li>
+  </ul>
+</div>
+
+<script>
+  // Floating petals
+  const petalContainer = document.getElementById('petals');
+  for (let i = 0; i < 12; i++) {
+    const petal = document.createElement('div');
+    petal.className = 'petal';
+    petal.style.left = Math.random() * 100 + 'vw';
+    petal.style.animationDuration = (8 + Math.random() * 10) + 's';
+    petal.style.animationDelay = (Math.random() * 12) + 's';
+    petal.style.width = (4 + Math.random() * 6) + 'px';
+    petal.style.height = (6 + Math.random() * 8) + 'px';
+    petal.style.opacity = 0.2 + Math.random() * 0.3;
+    petalContainer.appendChild(petal);
+  }
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Form submit
+  function handleSubmit() {
+    const name = document.getElementById('nameInput').value.trim();
+    const email = document.getElementById('emailInput').value.trim();
+
+    if (!name) { document.getElementById('nameInput').focus(); return; }
+    if (!email || !email.includes('@')) { document.getElementById('emailInput').focus(); return; }
+
+    document.getElementById('formContent').style.display = 'none';
+    document.getElementById('successState').style.display = 'block';
+
+    // In real Carrd: this connects to MailerLite / ConvertKit via their embed form
+  }
+</script>
+</body>
+</html>
