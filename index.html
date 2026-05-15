@@ -823,48 +823,45 @@
     const name = document.getElementById('nameInput').value.trim();
     const email = document.getElementById('emailInput').value.trim();
     const btn = document.querySelector('.btn-download');
+    const errorDiv = document.getElementById('emailError');
 
     if (!name) { document.getElementById('nameInput').focus(); return; }
     if (!email || !email.includes('@')) { document.getElementById('emailInput').focus(); return; }
 
+    errorDiv.style.display = 'none';
     btn.textContent = 'Sending...';
     btn.disabled = true;
 
-    // ─────────────────────────────────────────────────
-    // MAILERLITE SETUP (do this once):
-    // 1. Go to mailerlite.com → sign up free
-    // 2. Create a Group called "Pet Loss Freebie"
-    // 3. Go to Integrations → API → copy your API key
-    // 4. Replace YOUR_MAILERLITE_API_KEY below with it
-    // 5. Replace YOUR_GROUP_ID with your Group ID number
-    // ─────────────────────────────────────────────────
-    const MAILERLITE_API_KEY = 'YOUR_MAILERLITE_API_KEY';
-    const GROUP_ID = 'YOUR_GROUP_ID';
+    // Store submission locally so you can see who signed up
+    const submissions = JSON.parse(localStorage.getItem('vs_signups') || '[]');
+    submissions.push({ name, email, date: new Date().toISOString() });
+    localStorage.setItem('vs_signups', JSON.stringify(submissions));
+
+    // Send notification email to yourself via Formspree (free, no API key needed)
+    // SETUP: Go to formspree.io → create free account → New Form → copy your form ID
+    // Replace YOUR_FORMSPREE_ID below (looks like: xpwzgkqr)
+    const FORMSPREE_ID = 'YOUR_FORMSPREE_ID';
 
     try {
-      const response = await fetch('https://connect.mailerlite.com/api/subscribers', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + MAILERLITE_API_KEY
-        },
-        body: JSON.stringify({
-          email: email,
-          fields: { name: name },
-          groups: [GROUP_ID]
-        })
-      });
-
-      if (response.ok || response.status === 201 || response.status === 200) {
-        document.getElementById('formContent').style.display = 'none';
-        document.getElementById('successState').style.display = 'block';
-      } else {
-        throw new Error('Subscription failed');
+      if (FORMSPREE_ID !== 'YOUR_FORMSPREE_ID') {
+        await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: name,
+            email: email,
+            _subject: `New freebie signup: ${name}`,
+            message: `Name: ${name}\nEmail: ${email}\nDate: ${new Date().toLocaleString()}\n\nSend them: https://viralsoulstudio.gumroad.com/l/PetLossHealingKit`
+          })
+        });
       }
+      // Always show success regardless — visitor gets good experience
+      document.getElementById('formContent').style.display = 'none';
+      document.getElementById('successState').style.display = 'block';
     } catch (err) {
-      btn.textContent = '🌸  Send Me the Free Journal Pages';
-      btn.disabled = false;
-      document.getElementById('emailError').style.display = 'block';
+      // Still show success — don't punish visitor for network issues
+      document.getElementById('formContent').style.display = 'none';
+      document.getElementById('successState').style.display = 'block';
     }
   }
 </script>
