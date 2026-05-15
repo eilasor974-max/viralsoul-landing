@@ -758,7 +758,38 @@
         color: #8C3D2D !important;
         margin-bottom: 10px !important;
       }
+      .ml-embedded .ml-form-successBody p {
+        display: block !important;
+        color: #7A6860 !important;
+        font-size: 0.9rem !important;
+        line-height: 1.7 !important;
+        margin-bottom: 16px !important;
+      }
     </style>
+
+    <!-- Upsell shown after MailerLite success -->
+    <div id="mlUpsell" style="display:none; text-align:center; margin-top:20px; padding:24px; background:#FDF9F5; border-radius:14px; border:1px solid rgba(184,92,74,0.15);">
+      <div style="font-size:1.5rem; margin-bottom:8px;">🐾</div>
+      <p style="font-family:'Cormorant Garamond',serif; font-size:1.2rem; color:#8C3D2D; font-weight:600; margin-bottom:6px;">Ready to heal even deeper?</p>
+      <p style="font-size:0.85rem; color:#7A6860; line-height:1.6; margin-bottom:16px;">The full Pet Loss Healing Kit includes 50+ guided prompts, memory journal, affirmation cards, AI grief prompts & more — for only $9.99.</p>
+      <a href="https://viralsoulstudio.gumroad.com/l/PetLossHealingKit" target="_blank" style="display:inline-block; padding:14px 28px; background:linear-gradient(135deg,#B85C4A,#8C3D2D); color:#fff; border-radius:30px; text-decoration:none; font-size:0.88rem; letter-spacing:1px; text-transform:uppercase; font-family:'Jost',sans-serif;">View Full Healing Kit →</a>
+      <p style="font-size:0.75rem; color:#B85C4A; margin-top:10px;">⭐ Instant download · Works on any device</p>
+    </div>
+
+    <script>
+      // Poll every 500ms to detect MailerLite success state
+      const upsellInterval = setInterval(function() {
+        const successBody = document.querySelector('.ml-form-successBody');
+        const upsell = document.getElementById('mlUpsell');
+        if (successBody && upsell) {
+          const isVisible = window.getComputedStyle(successBody).display !== 'none' 
+                         && successBody.offsetHeight > 0;
+          if (isVisible && upsell.style.display === 'none') {
+            upsell.style.display = 'block';
+          }
+        }
+      }, 500);
+    </script>
 
     <div class="form-trust" style="margin-top:16px;">
       <span>🔒</span> 100% free · Instant download · No spam
