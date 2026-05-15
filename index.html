@@ -637,57 +637,8 @@
     transform: translateY(0);
   }
 
-  /* ─── INSTRUCTION OVERLAY ─── */
-  .carrd-guide {
-    position: fixed;
-    bottom: 24px; right: 24px;
-    background: var(--ink);
-    color: #fff;
-    border-radius: 16px;
-    padding: 20px 24px;
-    max-width: 280px;
-    z-index: 100;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-    font-size: 0.82rem;
-    line-height: 1.6;
-  }
-
-  .carrd-guide h5 {
-    font-size: 0.88rem;
-    font-weight: 500;
-    color: var(--rose-light);
-    margin-bottom: 8px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-  }
-
-  .carrd-guide ul {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    color: rgba(255,255,255,0.7);
-  }
-
-  .carrd-guide ul li::before {
-    content: '→ ';
-    color: var(--rose-light);
-  }
-
-  .close-guide {
-    position: absolute;
-    top: 12px; right: 14px;
-    background: none;
-    border: none;
-    color: rgba(255,255,255,0.4);
-    cursor: pointer;
-    font-size: 1.1rem;
-    line-height: 1;
-  }
-
   @media (max-width: 600px) {
     .form-wrapper { padding: 28px 20px; }
-    .carrd-guide { display: none; }
   }
 </style>
 </head>
@@ -746,13 +697,17 @@
       <div class="form-trust">
         <span>🔒</span> 100% free · Instant download · No spam
       </div>
+
+      <div id="emailError" style="display:none; margin-top:12px; background:#FEE2E2; border-radius:10px; padding:10px 14px; font-size:0.83rem; color:#991B1B; text-align:center;">
+        Something went wrong. Please try again or email us at viralsoulstudio@gmail.com
+      </div>
     </div>
 
     <div class="success-state" id="successState">
       <span class="success-icon">💌</span>
       <h3>Check Your Inbox!</h3>
       <p>Your free healing journal pages are on their way. While you wait — here's the full Pet Loss Healing Kit if you're ready to go deeper.</p>
-      <a href="https://viralsoulstudio.gumroad.com" class="btn-shop" target="_blank">
+      <a href="https://viralsoulstudio.gumroad.com/l/PetLossHealingKit" class="btn-shop" target="_blank">
         View Full Healing Kit →
       </a>
     </div>
@@ -837,19 +792,6 @@
   <p style="margin-top:12px;font-size:0.75rem">By entering your email, you agree to receive healing resources and occasional product updates from ViralSoul Studio. Unsubscribe anytime.</p>
 </footer>
 
-<!-- CARRD SETUP GUIDE -->
-<div class="carrd-guide" id="carrdGuide">
-  <button class="close-guide" onclick="document.getElementById('carrdGuide').style.display='none'">✕</button>
-  <h5>Carrd Setup Guide</h5>
-  <ul>
-    <li>Copy this design to Carrd</li>
-    <li>Replace form with Carrd's Form block</li>
-    <li>Connect MailerLite for email capture</li>
-    <li>Update Gumroad links with your URL</li>
-    <li>Add your product mockup image</li>
-  </ul>
-</div>
-
 <script>
   // Floating petals
   const petalContainer = document.getElementById('petals');
@@ -877,17 +819,53 @@
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
   // Form submit
-  function handleSubmit() {
+  async function handleSubmit() {
     const name = document.getElementById('nameInput').value.trim();
     const email = document.getElementById('emailInput').value.trim();
+    const btn = document.querySelector('.btn-download');
 
     if (!name) { document.getElementById('nameInput').focus(); return; }
     if (!email || !email.includes('@')) { document.getElementById('emailInput').focus(); return; }
 
-    document.getElementById('formContent').style.display = 'none';
-    document.getElementById('successState').style.display = 'block';
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
 
-    // In real Carrd: this connects to MailerLite / ConvertKit via their embed form
+    // ─────────────────────────────────────────────────
+    // MAILERLITE SETUP (do this once):
+    // 1. Go to mailerlite.com → sign up free
+    // 2. Create a Group called "Pet Loss Freebie"
+    // 3. Go to Integrations → API → copy your API key
+    // 4. Replace YOUR_MAILERLITE_API_KEY below with it
+    // 5. Replace YOUR_GROUP_ID with your Group ID number
+    // ─────────────────────────────────────────────────
+    const MAILERLITE_API_KEY = 'YOUR_MAILERLITE_API_KEY';
+    const GROUP_ID = 'YOUR_GROUP_ID';
+
+    try {
+      const response = await fetch('https://connect.mailerlite.com/api/subscribers', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + MAILERLITE_API_KEY
+        },
+        body: JSON.stringify({
+          email: email,
+          fields: { name: name },
+          groups: [GROUP_ID]
+        })
+      });
+
+      if (response.ok || response.status === 201 || response.status === 200) {
+        document.getElementById('formContent').style.display = 'none';
+        document.getElementById('successState').style.display = 'block';
+      } else {
+        throw new Error('Subscription failed');
+      }
+    } catch (err) {
+      btn.textContent = '🌸  Send Me the Free Journal Pages';
+      btn.disabled = false;
+      document.getElementById('emailError').style.display = 'block';
+    }
   }
 </script>
 </body>
