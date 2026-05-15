@@ -640,6 +640,18 @@
   @media (max-width: 600px) {
     .form-wrapper { padding: 28px 20px; }
   }
+
+  /* MailerLite form overrides to match page design */
+  .ml-embedded { margin-top: 8px; }
+  .ml-embedded .ml-form-embedWrapper { background: transparent !important; border: none !important; padding: 0 !important; }
+  .ml-embedded .ml-form-fieldRow input { width: 100% !important; padding: 14px 18px !important; border: 1.5px solid rgba(184,92,74,0.2) !important; border-radius: 10px !important; font-family: 'Jost', sans-serif !important; font-size: 0.95rem !important; color: var(--ink) !important; background: var(--warm-white) !important; margin-bottom: 12px !important; outline: none !important; box-shadow: none !important; }
+  .ml-embedded .ml-form-fieldRow input:focus { border-color: var(--rose) !important; box-shadow: 0 0 0 3px rgba(184,92,74,0.1) !important; }
+  .ml-embedded button, .ml-embedded .ml-form-embedSubmit button { width: 100% !important; padding: 18px !important; background: linear-gradient(135deg, #B85C4A 0%, #8C3D2D 100%) !important; color: #fff !important; border: none !important; border-radius: 12px !important; font-family: 'Jost', sans-serif !important; font-size: 1rem !important; font-weight: 500 !important; letter-spacing: 1.5px !important; text-transform: uppercase !important; cursor: pointer !important; margin-top: 8px !important; }
+  .ml-embedded button:hover { transform: translateY(-2px) !important; box-shadow: 0 8px 24px rgba(138,61,45,0.3) !important; }
+  .ml-embedded .ml-form-embedBody .ml-form-embedContent { display: none !important; }
+  .ml-embedded .ml-form-successBody { text-align: center !important; padding: 20px 0 !important; }
+  .ml-embedded .ml-form-successContent h4 { font-family: 'Cormorant Garamond', serif !important; font-size: 1.6rem !important; color: var(--rose-deep) !important; margin-bottom: 10px !important; }
+  .ml-embedded .ml-form-successContent p { color: var(--muted) !important; font-size: 0.9rem !important; line-height: 1.7 !important; }
 </style>
 </head>
 <body>
@@ -675,43 +687,82 @@
 <!-- EMAIL FORM -->
 <section class="form-section">
   <div class="form-wrapper" id="formWrapper">
+    <div class="form-label">Get Instant Access</div>
+    <div class="form-sublabel">Enter your name and email — we'll send your free journal pages immediately. No spam, ever.</div>
 
-    <div id="formContent">
-      <div class="form-label">Get Instant Access</div>
-      <div class="form-sublabel">Enter your name and email — we'll send your free journal pages immediately. No spam, ever.</div>
+    <!-- MailerLite Universal Script -->
+    <script>
+    (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+    .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+    n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})(
+    window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+    ml('account', '2350735');
+    </script>
 
-      <div class="form-group">
-        <label>Your First Name</label>
-        <input type="text" id="nameInput" placeholder="e.g. Maria" />
-      </div>
+    <!-- MailerLite Embedded Form -->
+    <div class="ml-embedded" data-form="IqBm30"></div>
 
-      <div class="form-group">
-        <label>Your Email Address</label>
-        <input type="email" id="emailInput" placeholder="maria@email.com" />
-      </div>
+    <style>
+      .ml-embedded .ml-form-embedWrapper { background: transparent !important; padding: 0 !important; border: none !important; box-shadow: none !important; }
+      .ml-embedded .ml-form-embedBody { padding: 0 !important; }
+      .ml-embedded input[type="text"],
+      .ml-embedded input[type="email"] {
+        width: 100% !important;
+        padding: 14px 18px !important;
+        border: 1.5px solid rgba(184,92,74,0.2) !important;
+        border-radius: 10px !important;
+        font-size: 0.95rem !important;
+        color: #2A1F1A !important;
+        background: #FDF9F5 !important;
+        margin-bottom: 12px !important;
+        outline: none !important;
+        box-shadow: none !important;
+        font-family: 'Jost', sans-serif !important;
+      }
+      .ml-embedded input:focus {
+        border-color: #B85C4A !important;
+        box-shadow: 0 0 0 3px rgba(184,92,74,0.1) !important;
+      }
+      .ml-embedded button[type="submit"] {
+        width: 100% !important;
+        padding: 18px !important;
+        background: linear-gradient(135deg, #B85C4A 0%, #8C3D2D 100%) !important;
+        color: #fff !important;
+        border: none !important;
+        border-radius: 12px !important;
+        font-size: 1rem !important;
+        font-weight: 500 !important;
+        letter-spacing: 1.5px !important;
+        text-transform: uppercase !important;
+        cursor: pointer !important;
+        font-family: 'Jost', sans-serif !important;
+        margin-top: 8px !important;
+      }
+      .ml-embedded button[type="submit"]:hover {
+        opacity: 0.9 !important;
+      }
+      .ml-embedded .ml-form-embedContent,
+      .ml-embedded .ml-form-embedBody h4,
+      .ml-embedded .ml-form-embedBody p {
+        display: none !important;
+      }
+      .ml-embedded .ml-form-successBody {
+        text-align: center !important;
+        padding: 20px 0 !important;
+        font-family: 'Jost', sans-serif !important;
+      }
+      .ml-embedded .ml-form-successBody h4 {
+        display: block !important;
+        font-family: 'Cormorant Garamond', serif !important;
+        font-size: 1.6rem !important;
+        color: #8C3D2D !important;
+        margin-bottom: 10px !important;
+      }
+    </style>
 
-      <button class="btn-download" onclick="handleSubmit()">
-        🌸 &nbsp; Send Me the Free Journal Pages
-      </button>
-
-      <div class="form-trust">
-        <span>🔒</span> 100% free · Instant download · No spam
-      </div>
-
-      <div id="emailError" style="display:none; margin-top:12px; background:#FEE2E2; border-radius:10px; padding:10px 14px; font-size:0.83rem; color:#991B1B; text-align:center;">
-        Something went wrong. Please try again or email us at viralsoulstudio@gmail.com
-      </div>
+    <div class="form-trust" style="margin-top:16px;">
+      <span>🔒</span> 100% free · Instant download · No spam
     </div>
-
-    <div class="success-state" id="successState">
-      <span class="success-icon">💌</span>
-      <h3>Check Your Inbox!</h3>
-      <p>Your free healing journal pages are on their way. While you wait — here's the full Pet Loss Healing Kit if you're ready to go deeper.</p>
-      <a href="https://viralsoulstudio.gumroad.com/l/PetLossHealingKit" class="btn-shop" target="_blank">
-        View Full Healing Kit →
-      </a>
-    </div>
-
   </div>
 </section>
 
